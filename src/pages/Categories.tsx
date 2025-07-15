@@ -7,11 +7,12 @@ import { Container, Row, Col } from "react-bootstrap";
 const Categories = () => {
   const dispatch = useAppDispatch();
   const { error, loading, records } = useAppSelector((state) => state.categories);
-  
+
   useEffect(() => {
-  
-    dispatch(actGetCategories())
-  }, [dispatch])
+    if (!records.length) {
+      dispatch(actGetCategories())
+    }
+  }, [dispatch, records])
 
   const categoriesList = records.length > 0 ?
     records.map((record) => (
