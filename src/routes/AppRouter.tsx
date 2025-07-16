@@ -4,12 +4,12 @@ import MainLayout from "@layouts/MainLayout/MainLayout";
 // pages
 import Home from "@pages/Home";
 import Categories from "@pages/Categories";
+import Cart from "@pages/Cart";
 import Products from "@pages/Products";
 import AboutUs from "@pages/AboutUs";
 import Login from "@pages/Login";
 import Register from "@pages/Register";
 import Error from "@pages/Error";
-
 
 const router = createBrowserRouter([
   {
@@ -21,8 +21,9 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
+      { path: "/cart", element: <Cart /> },
       {
-        path: "categories",
+        path: "/categories",
         element: <Categories />,
       },
       {

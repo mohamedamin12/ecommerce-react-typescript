@@ -1,12 +1,13 @@
-import { TProduct } from "@customTypes/product";
-import { Button  , Spinner } from "react-bootstrap";
-import styles from "./styles.module.css";
+import { useEffect, useState, memo } from "react";
 import { useAppDispatch } from "@store/hooks";
-import { memo, useEffect, useState } from "react";
 import { addToCart } from "@store/cart/cartSlice";
-const { product, productImg , maximumNotice  } = styles;
+import { Button, Spinner } from "react-bootstrap";
+import { TProduct } from "@customTypes/product";
 
-const Product = memo(({ id , title, price, img , quantity , max }: TProduct) => {
+import styles from "./styles.module.css";
+const { product, productImg, maximumNotice } = styles;
+
+const Product = memo(({ id, title, price, img, max, quantity }: TProduct) => {
   const dispatch = useAppDispatch();
   const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
@@ -29,14 +30,13 @@ const Product = memo(({ id , title, price, img , quantity , max }: TProduct) => 
     dispatch(addToCart(id));
     setIsBtnDisabled(true);
   };
-
   return (
     <div className={product}>
       <div className={productImg}>
         <img src={img} alt={title} />
       </div>
       <h2>{title}</h2>
-      <h3>{Number(price.toFixed(2))} EGP</h3>
+      <h3>{price.toFixed(2)} EGP</h3>
       <p className={maximumNotice}>
         {quantityReachedToMax
           ? "You reach to the limit"

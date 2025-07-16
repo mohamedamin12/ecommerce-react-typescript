@@ -6,9 +6,9 @@ import {
   productsCleanUp,
 } from "@store/products/productsSlice";
 import { GridList } from "@components/common";
+import { Product } from "@components/eCommrce";
 import { Loading } from "@components/feedback";
 import { TProduct } from "@customTypes/product";
-import Product from "@components/eCommrce/Product/Product";
 
 const Products = () => {
   const params = useParams();
@@ -31,7 +31,7 @@ const Products = () => {
 
   return (
     <>
-      <Loading loading={loading} error={error}>
+      <Loading status={loading} error={error}>
         <GridList<TProduct>
           records={productsFullInfo}
           renderItem={(record) => <Product {...record} />}
