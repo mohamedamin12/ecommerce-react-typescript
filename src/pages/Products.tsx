@@ -5,13 +5,21 @@ import {
   actGetProductsByCatPrefix,
   productsCleanUp,
 } from "@store/products/productsSlice";
-import { Container, Row, Col } from "react-bootstrap";
+import { GridList } from "@components/common";
+import { Loading } from "@components/feedback";
+import { TProduct } from "@customTypes/product";
 import Product from "@components/eCommrce/Product/Product";
 
 const Products = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const { loading, error, records } = useAppSelector((state) => state.products);
+  const cartItems = useAppSelector((state) => state.cart.items);
+
+  const productsFullInfo = records.map((el) => ({
+    ...el,
+    quantity: cartItems[el.id] || 0,
+  }));
 
   useEffect(() => {
     dispatch(actGetProductsByCatPrefix(params.prefix as string));
@@ -21,23 +29,15 @@ const Products = () => {
     };
   }, [dispatch, params]);
 
-  const productsList =
-    records.length > 0
-      ? records.map((record) => (
-          <Col
-            xs={3}
-            key={record.id}
-            className="d-flex justify-content-center mb-5 mt-2"
-          >
-            <Product {...record} />
-          </Col>
-        ))
-      : "there are no categories";
-
   return (
-    <Container>
-      <Row>{productsList}</Row>
-    </Container>
+    <>
+      <Loading loading={loading} error={error}>
+        <GridList<TProduct>
+          records={productsFullInfo}
+          renderItem={(record) => <Product {...record} />}
+        />
+      </Loading>
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ import { Loading } from "@components/feedback";
 import { TCategory } from "@customTypes/category";
 import GridList from "@components/common/GridList/GridList";
 import Category from "@components/eCommrce/Category/Category";
+import { Heading } from "@components/common";
 
 const Categories = () => {
   const dispatch = useAppDispatch();
@@ -19,12 +20,15 @@ const Categories = () => {
   }, [dispatch, records]);
 
   return (
-    <Loading loading={loading} error={error}>
-      <GridList<TCategory>
-        records={records}
-        renderItem={(record) => <Category {...record} />}
-      />
-    </Loading>
+    <>
+      <Heading>Categories</Heading>
+      <Loading loading={loading} error={error}>
+        <GridList<TCategory>
+          records={records}
+          renderItem={(record) => <Category {...record} />}
+        />
+      </Loading>
+    </>
   );
 };
 
