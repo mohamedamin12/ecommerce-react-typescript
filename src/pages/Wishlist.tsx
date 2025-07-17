@@ -1,7 +1,7 @@
 import { GridList, Heading } from "@components/common";
 import { Product } from "@components/eCommrce";
 import { Loading } from "@components/feedback";
-import { TProduct } from "@customTypes/product";
+import { TProduct } from "@types";
 import useWishlist from "@hooks/useWishlist";
 
 const Wishlist = () => {

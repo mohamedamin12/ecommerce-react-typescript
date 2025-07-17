@@ -1,5 +1,5 @@
 import { Loading } from "@components/feedback";
-import { TCategory } from "@customTypes/category";
+import { TCategory } from "@types";
 import GridList from "@components/common/GridList/GridList";
 import Category from "@components/eCommrce/Category/Category";
 import { Heading } from "@components/common";
