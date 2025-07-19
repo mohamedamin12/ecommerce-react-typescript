@@ -3,6 +3,7 @@ import actLikeToggle from "./act/actLikeToggle";
 import actGetWishlist from "./act/actGetWishlist";
 import { isString, TLoading } from "@types";
 import { TProduct } from "@types";
+import { authLogout } from "@store/auth/authSlice";
 interface IWishlist {
   itemsId: number[];
   productsFullInfo: TProduct[];
@@ -44,14 +45,18 @@ const wishlistSlice = createSlice({
         state.error = action.payload;
       }
     });
-    // get wishlist items
+    //* get wishlist items
     builder.addCase(actGetWishlist.pending, (state) => {
       state.loading = "pending";
       state.error = null;
     });
     builder.addCase(actGetWishlist.fulfilled, (state, action) => {
       state.loading = "succeeded";
-      state.productsFullInfo = action.payload;
+      if (action.payload.dataType === "ProductsFullInfo") {
+        state.productsFullInfo = action.payload.data as TProduct[];
+      } else if (action.payload.dataType === "productsIds") {
+        state.itemsId = action.payload.data as number[];
+      }
     });
     builder.addCase(actGetWishlist.rejected, (state, action) => {
       state.loading = "failed";
@@ -59,6 +64,12 @@ const wishlistSlice = createSlice({
         state.error = action.payload;
       }
     });
+
+       // when logout reset
+       builder.addCase(authLogout, (state) => {
+        state.itemsId = [];
+        state.productsFullInfo = [];
+      });
   },
 });
 
